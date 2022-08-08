@@ -2,7 +2,6 @@ name: Node workflow
 on:
   pull_request:
     branches:
-      - master
       - develop
       - verbose
     paths-ignore:
@@ -10,7 +9,6 @@ on:
       - 'examples/**'
   push:
     branches:
-      - master
       - develop
       - verbose
     paths-ignore:
