@@ -45,6 +45,6 @@ jobs:
         uses: notify-events/github-action@main
         with:
           token: $(( secrets.NE_CHANNEL_TOKEN }}
-          success: Build {{ github.ref }} successfully
+          text: Build sucess
           
   
