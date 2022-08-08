@@ -41,10 +41,15 @@ jobs:
           name: php-app.tar.gz
           path: ./php-app.tar.gz
           
-      - name: Notify build events
-        uses: notify-events/github-action@main
-        with:
-          token: $(( secrets.NE_CHANNEL_TOKEN }}
-          text: Build sucess
-          
+  notify:
+    runs-on: ubuntu-latest
+    if: always()
+    needs: build
+    steps:
+    - name: Send a Notification
+      id: notify
+      uses: thechetantalwar/teams-notify@v2
+      with:
+        teams_webhook_url: ${{ secrets.TEAM_HOOK }}
+        message: "Github Action Build Completed "
   
