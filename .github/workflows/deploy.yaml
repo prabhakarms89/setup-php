@@ -36,5 +36,6 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
+          state: 'failure'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
