@@ -96,11 +96,10 @@ jobs:
           # add your deployment code here
 
       - name: Update deployment status
-        if: always()
+        if: success() || failure()
         uses: chrnorm/deployment-status@v2
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
-          state: 'success'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
