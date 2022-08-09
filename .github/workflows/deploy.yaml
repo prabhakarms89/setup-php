@@ -91,7 +91,7 @@ jobs:
           environment-url: http://my-app-url.com
           environment: production
 
-      - name: Deploy my app
+      - name: notification
         run: |
           # add your deployment code here
 
@@ -101,6 +101,6 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
-          state: 'success || failed'
+          state: 'success'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
