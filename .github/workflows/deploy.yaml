@@ -31,13 +31,6 @@ jobs:
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
-        
-      - name: Use Node.js 
-      - uses: actions/setup-node@v3
-        with:
-         node-version: ${{ matrix.node-version }}
-         cache: 'npm'
-        run: npm install
       
       - name: Tar files
         run: tar -cvf php-app.tar.gz .
@@ -47,6 +40,7 @@ jobs:
         with:
           name: php-app.tar.gz
           path: ./php-app.tar.gz
+          
   notify_php:
       runs-on: ubuntu-latest
       if: always()
@@ -58,6 +52,7 @@ jobs:
         with:
           teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
           message: "Github Action PHP Build completed"
+          
   sonar_job:
     name: sonar_scanning
     needs: build
