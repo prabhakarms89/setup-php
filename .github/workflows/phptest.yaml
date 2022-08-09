@@ -7,8 +7,8 @@ name: Build and deploy PHP app to Azure Web App - alphacollege
 on:
   push:
     branches:
-      - develop
-
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,6 +31,13 @@ jobs:
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
+        
+      - name: Use Node.js 
+      - uses: actions/setup-node@v3
+        with:
+         node-version: ${{ matrix.node-version }}
+         cache: 'npm'
+        run: npm install
       
       - name: Tar files
         run: tar -cvf php-app.tar.gz .
@@ -41,9 +48,8 @@ jobs:
           name: php-app.tar.gz
           path: ./php-app.tar.gz
           
-  notify:
-    runs-on: ubuntu-latest
-    if: always()
+    notify:
+    if: success()
     needs: build
     steps:
     - name: Send a Notification
@@ -51,13 +57,5 @@ jobs:
       uses: thechetantalwar/teams-notify@v2
       with:
         teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
-        message: "Github Action Build Completed "
-  
-    - name: Notification
-      uses: marcdomain/notify-status@v1
-      with:
-        app: teams
-        notify_on: success # remove notify_on to always receive notification
-        status: ${{ job.status }}
-        webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
-        message: Notification sent successfully
+        state: success
+        message: "Build Completed completed successfully "
