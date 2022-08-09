@@ -92,7 +92,7 @@ jobs:
         run: |
           # add your deployment code here
       - name: Update deployment status (success)
-        if: success()
+        if: always()
         uses: chrnorm/deployment-status@v2
         with:
           token: '${{ github.token }}'
@@ -101,7 +101,7 @@ jobs:
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Update deployment status (failure)
-        if: failure()
+        if: always()
         uses: chrnorm/deployment-status@v2
         with:
           token: '${{ github.token }}'
