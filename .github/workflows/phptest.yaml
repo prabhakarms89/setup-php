@@ -50,6 +50,14 @@ jobs:
       id: notify
       uses: thechetantalwar/teams-notify@v2
       with:
-        teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/e7d548bc-b2ab-4a84-901c-07b67cc22663@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/86822a6960e44757a8d39bdde78b0784/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
+        teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
         message: "Github Action Build Completed "
   
+    - name: Notification
+      uses: marcdomain/notify-status@v1
+      with:
+        app: teams
+        notify_on: success # remove notify_on to always receive notification
+        status: ${{ job.status }}
+        webhook_url: ${{ secrets.https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2 }}
+        message: Notification sent successfully
