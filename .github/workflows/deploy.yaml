@@ -52,41 +52,10 @@ jobs:
         with:
           teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
           message: "Github Action PHP Build completed"
-          
-  sonar_job:
-    name: sonar_scanning
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  notify_sonar:
-      runs-on: ubuntu-latest
-      if: always()
-      needs: build
-      steps:
-      - name: Send a Notification
-        id: notify
-        uses: thechetantalwar/teams-notify@v2
-        with:
-          teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
-          message: "Github Action PHP Build completed"
       
   deploy:
     runs-on: ubuntu-latest
-    needs: sonar_job
+    needs: build
     environment:
       name: 'uat'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
