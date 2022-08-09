@@ -51,11 +51,11 @@ jobs:
     notify:
     if: success()
     needs: build
-    steps:
-      - name: Send a Notification
-        id: notify
-        uses: thechetantalwar/teams-notify@v2
-        with:
-          teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
-          state: success
-          message: "Build Completed completed successfully "
+      steps:
+        - name: Send a Notification
+          id: notify
+          uses: thechetantalwar/teams-notify@v2
+          with:
+            teams_webhook_url: https://intergyco.webhook.office.com/webhookb2/80b3d514-eba8-43bc-853f-eb7243c54b67@88af3584-c7f6-42be-b743-fdb59237f4b5/IncomingWebhook/5abce058c752425bbce3cc8d5ffc8747/6ce6dc29-a200-4118-bb8a-e4ccae6b2bb2
+            state: success
+            message: "Build Completed completed successfully "
